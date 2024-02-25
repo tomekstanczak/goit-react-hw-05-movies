@@ -3,7 +3,7 @@ import { Outlet, Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import css from './MovieDetails.module.css';
 
-export default function MoviesDetails({}) {
+export default function MoviesDetails() {
   const navigate = useNavigate();
   const { movieId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
