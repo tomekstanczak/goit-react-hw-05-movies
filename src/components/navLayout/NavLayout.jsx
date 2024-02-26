@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import css from './NavLayout.module.css';
 
@@ -15,7 +15,9 @@ export default function NavLayout() {
           </NavLink>
         </menu>
       </header>
-      <Outlet />
+      <Suspense fallback={<div>Loading... </div>}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 }
