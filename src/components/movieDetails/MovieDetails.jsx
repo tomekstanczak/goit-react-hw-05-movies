@@ -33,7 +33,9 @@ export default function MoviesDetails() {
   }, [movieId]);
 
   const handleGoBack = () => {
-    navigate(`/movies?query=${localStorage.getItem('query')}`);
+    navigate(
+      `/goit-react-hw-05-movies/movies?query=${localStorage.getItem('query')}`
+    );
   };
 
   return (

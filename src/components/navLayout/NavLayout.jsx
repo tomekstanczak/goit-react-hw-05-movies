@@ -7,10 +7,10 @@ export default function NavLayout() {
     <div>
       <header>
         <menu className={css.menuStyle}>
-          <NavLink to="/" className={css.link}>
+          <NavLink to="/goit-react-hw-05-movies" className={css.link}>
             Home
           </NavLink>
-          <NavLink to="/movies" className={css.link}>
+          <NavLink to="movies" className={css.link}>
             Movies
           </NavLink>
         </menu>

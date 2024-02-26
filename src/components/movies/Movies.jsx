@@ -40,7 +40,7 @@ export default function Movies() {
   const handleSubmit = e => {
     e.preventDefault();
     setSearchParams({ query: searchingMovie });
-    navigate(`/movies?query=${searchingMovie}`);
+    navigate(`?query=${searchingMovie}`);
     localStorage.setItem('query', searchingMovie);
   };
 

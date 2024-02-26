@@ -11,12 +11,12 @@ export const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<NavLayout />}>
+        <Route path="/goit-react-hw-05-movies" element={<NavLayout />}>
           <Route index element={<Home />} />
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/movies/:movieId" element={<MoviesDetails />}>
-            <Route path="/movies/:movieId/reviews" element={<Reviews />} />
-            <Route path="/movies/:movieId/cast" element={<Cast />} />
+          <Route path="movies" element={<Movies />} />
+          <Route path="movies/:movieId" element={<MoviesDetails />}>
+            <Route path="reviews" element={<Reviews />} />
+            <Route path="cast" element={<Cast />} />
           </Route>
         </Route>
       </Routes>

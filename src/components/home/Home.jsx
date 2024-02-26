@@ -34,7 +34,7 @@ export default function Home() {
         {isLoading && <p>Loading ...</p>}
         {moviesList.map((movie, index) => (
           <li key={index}>
-            <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+            <Link to={`movies/${movie.id}`}>{movie.title}</Link>
           </li>
         ))}
       </ul>
