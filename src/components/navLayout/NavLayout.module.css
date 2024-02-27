@@ -13,11 +13,6 @@
   font-weight: 700;
 }
 
-.link.active {
-  color: red;
-  text-decoration: underline;
-}
-
 .link:hover {
   text-decoration: underline;
   color: red;

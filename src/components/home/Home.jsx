@@ -1,28 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+
+import useApi from 'hooks/Api';
 
 export default function Home() {
-  const [moviesList, setMoviesList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsErrror] = useState(false);
+  const apiUrl =
+    'https://api.themoviedb.org/3/trending/movie/day?api_key=6f0a7e90748cec36ca14cbe73d2c8153';
+  const { isLoading, isError, data, getResaults } = useApi(apiUrl);
 
   useEffect(() => {
-    setIsLoading(true);
-    const getResaults = async () => {
-      try {
-        const { data } = await axios.get(
-          'https://api.themoviedb.org/3/trending/movie/day?api_key=6f0a7e90748cec36ca14cbe73d2c8153'
-        );
-        console.log(data);
-        setMoviesList(data.results);
-      } catch (error) {
-        setIsErrror(true);
-        console.error('error');
-      } finally {
-        setIsLoading(false);
-      }
-    };
     getResaults();
   }, []);
 
@@ -32,7 +18,7 @@ export default function Home() {
       <ul>
         {isError && <p>Something went wrong...</p>}
         {isLoading && <p>Loading ...</p>}
-        {moviesList.map((movie, index) => (
+        {data.map((movie, index) => (
           <li key={index}>
             <Link to={`movies/${movie.id}`}>{movie.title}</Link>
           </li>

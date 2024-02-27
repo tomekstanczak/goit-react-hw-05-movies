@@ -1,36 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import useApi from 'hooks/Api';
 import css from './Movies.module.css';
 
 export default function Movies() {
   const [searchingMovie, setSearchingMovie] = useState('');
-  const [searchedMovieData, setSearchedMovieData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  const searchQuery = searchParams.get('query');
+
+  const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=6f0a7e90748cec36ca14cbe73d2c8153&query=${searchQuery}`;
+  const { isLoading, data, getResaults } = useApi(apiUrl);
+
   useEffect(() => {
-    const searchQuery = searchParams.get('query');
     if (searchQuery) {
       setSearchingMovie(searchQuery);
-      getMovie(searchQuery);
+      getResaults(searchQuery);
     }
   }, [searchParams]);
-
-  const getMovie = async searchQuery => {
-    setIsLoading(true);
-    try {
-      const { data } = await axios.get(
-        `https://api.themoviedb.org/3/search/movie?api_key=6f0a7e90748cec36ca14cbe73d2c8153&query=${searchQuery}`
-      );
-      setSearchedMovieData(data.results);
-    } catch (error) {
-      console.error('error');
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleChange = event => {
     const value = event.target.value;
@@ -41,7 +29,6 @@ export default function Movies() {
     e.preventDefault();
     setSearchParams({ query: searchingMovie });
     navigate(`?query=${searchingMovie}`);
-    localStorage.setItem('query', searchingMovie);
   };
 
   return (
@@ -54,7 +41,7 @@ export default function Movies() {
       </form>
       <ul>
         {isLoading && <p>Loading ...</p>}
-        {searchedMovieData.map((movie, index) => (
+        {data.map((movie, index) => (
           <li key={index}>
             <Link to={`${movie.id}`}>{movie.title}</Link>
           </li>

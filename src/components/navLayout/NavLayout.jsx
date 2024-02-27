@@ -7,10 +7,28 @@ export default function NavLayout() {
     <div>
       <header>
         <menu className={css.menuStyle}>
-          <NavLink to="/goit-react-hw-05-movies" className={css.link}>
+          <NavLink
+            to="/goit-react-hw-05-movies"
+            className={css.link}
+            style={({ isActive }) => {
+              return {
+                color: isActive ? 'red' : 'black',
+              };
+            }}
+            end
+          >
             Home
           </NavLink>
-          <NavLink to="movies" className={css.link}>
+          <NavLink
+            to="movies"
+            className={css.link}
+            style={({ isActive }) => {
+              return {
+                color: isActive ? 'red' : 'black',
+              };
+            }}
+            end
+          >
             Movies
           </NavLink>
         </menu>
@@ -21,3 +39,16 @@ export default function NavLayout() {
     </div>
   );
 }
+
+<NavLink
+  to="/messages"
+  style={({ isActive, isPending, isTransitioning }) => {
+    return {
+      fontWeight: isActive ? 'bold' : '',
+      color: isPending ? 'red' : 'black',
+      viewTransitionName: isTransitioning ? 'slide' : '',
+    };
+  }}
+>
+  Messages
+</NavLink>;
