@@ -10,6 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     getResaults();
+    // eslint-disable-next-line
   }, []);
 
   return (

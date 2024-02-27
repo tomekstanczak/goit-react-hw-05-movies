@@ -18,7 +18,8 @@ export default function Movies() {
       setSearchingMovie(searchQuery);
       getResaults(searchQuery);
     }
-  }, [searchParams, searchQuery]);
+    // eslint-disable-next-line
+  }, [searchParams]);
 
   const handleChange = event => {
     const value = event.target.value;
