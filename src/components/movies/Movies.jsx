@@ -18,7 +18,7 @@ export default function Movies() {
       setSearchingMovie(searchQuery);
       getResaults(searchQuery);
     }
-  }, [searchParams]);
+  }, [searchParams, searchQuery]);
 
   const handleChange = event => {
     const value = event.target.value;
