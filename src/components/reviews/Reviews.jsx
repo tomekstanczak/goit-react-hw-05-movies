@@ -1,30 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import useApi from 'hook/useApi';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { getReviews } from 'services/endpointApi';
 
 export default function Reviews() {
   const { movieId } = useParams();
-  const [movieReviev, setMovieReviev] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsErrror] = useState(false);
+  const { data, isLoading, isError, getResults } = useApi(getReviews, movieId);
 
   useEffect(() => {
-    const getReview = async () => {
-      setIsLoading(true);
-      try {
-        const { data } = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=6f0a7e90748cec36ca14cbe73d2c8153`
-        );
-        console.log(data.results);
-        setMovieReviev(data.results);
-      } catch (error) {
-        console.log(error, 'Error');
-        setIsErrror(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    getReview();
+    getResults();
+    // eslint-disable-next-line
   }, [movieId]);
 
   return (
@@ -32,8 +17,8 @@ export default function Reviews() {
       <ul>
         {isError && <p>Something went wrong...</p>}
         {isLoading && <p>Loading ...</p>}
-        {movieReviev.length > 0 ? (
-          movieReviev.map(review => (
+        {data.length > 0 ? (
+          data.map(review => (
             <li key={review.id}>
               <p>{review.content}</p>
               <p>{review.author}</p>

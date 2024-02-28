@@ -1,35 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Outlet, Link, useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import css from './MovieDetails.module.css';
+import useApi from 'hook/useApi';
+import { getMovieDetails } from 'services/endpointApi';
 
 export default function MoviesDetails() {
   const navigate = useNavigate();
   const { movieId } = useParams();
-  const [isLoading, setIsLoading] = useState(false);
-  const [movieDetails, setMovieDetails] = useState({
-    overview: '',
-    poster_path: '',
-    title: '',
-    genres: [],
-  });
+
+  const { isLoading, data, getResults } = useApi(
+    getMovieDetails,
+    movieId,
+    false
+  );
+  console.log(data);
 
   useEffect(() => {
-    const getMovieDetails = async () => {
-      setIsLoading(true);
-      try {
-        const { data } = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movieId}?api_key=6f0a7e90748cec36ca14cbe73d2c8153`
-        );
-        console.log(data);
-        setMovieDetails(data);
-      } catch (error) {
-        console.log(error, 'Error');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    getMovieDetails();
+    getResults();
+    // eslint-disable-next-line
   }, [movieId]);
 
   const handleGoBack = () => {
@@ -45,21 +33,25 @@ export default function MoviesDetails() {
         <div>
           {isLoading && <p>Loading ...</p>}
           <img
-            src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
-            alt={movieDetails.title}
+            src={`https://image.tmdb.org/t/p/w500${data && data.poster_path}`}
+            alt={data && data.title}
             width="200px"
             height="300px"
           ></img>
         </div>
         <div>
           {isLoading && <p>Loading ...</p>}
-          <h1>{movieDetails.title}</h1>
+          <h1> {data && data.title}</h1>
           <h2>Overview</h2>
           {isLoading && <p>Loading ...</p>}
-          <p>{movieDetails.overview}</p>
+          <p>{data && data.overview}</p>
           <h3>Genres</h3>
           {isLoading && <p>Loading ...</p>}
-          <p>{movieDetails.genres.map(genre => genre.name).join(', ')}</p>
+          <p>
+            {data &&
+              data.genres &&
+              data.genres.map(genre => genre.name).join(', ')}
+          </p>
         </div>
       </div>
       <div className={css.additionalStyle}>

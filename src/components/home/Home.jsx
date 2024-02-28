@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import useApi from 'hooks/Api';
+import useApi from 'hook/useApi';
+import { getHomepageMovies } from 'services/endpointApi';
 
 export default function Home() {
-  const apiUrl =
-    'https://api.themoviedb.org/3/trending/movie/day?api_key=6f0a7e90748cec36ca14cbe73d2c8153';
-  const { isLoading, isError, data, getResaults } = useApi(apiUrl);
+  const { isLoading, isError, data, getResults } = useApi(getHomepageMovies);
 
   useEffect(() => {
-    getResaults();
+    getResults();
     // eslint-disable-next-line
   }, []);
 

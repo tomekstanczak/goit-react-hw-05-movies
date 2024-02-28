@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
-import useApi from 'hooks/Api';
+import useApi from 'hook/useApi';
 import css from './Movies.module.css';
+import { searchMovies } from 'services/endpointApi';
 
 export default function Movies() {
   const [searchingMovie, setSearchingMovie] = useState('');
@@ -10,13 +11,12 @@ export default function Movies() {
 
   const searchQuery = searchParams.get('query');
 
-  const apiUrl = `https://api.themoviedb.org/3/search/movie?api_key=6f0a7e90748cec36ca14cbe73d2c8153&query=${searchQuery}`;
-  const { isLoading, data, getResaults } = useApi(apiUrl);
+  const { isLoading, data, getResults } = useApi(searchMovies, searchQuery);
 
   useEffect(() => {
     if (searchQuery) {
       setSearchingMovie(searchQuery);
-      getResaults(searchQuery);
+      getResults(searchQuery);
     }
     // eslint-disable-next-line
   }, [searchParams]);
